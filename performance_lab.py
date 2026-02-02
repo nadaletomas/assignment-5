@@ -7,17 +7,38 @@
 # Output: 3
 
 def most_frequent(numbers):
-    # Your code here
-    pass
+    for item in lst:
+        if item == target:
+            return True
+    return False
+
+
+# Tests
+assert linear_search([1, 2, 3, 4], 1) is True
+assert linear_search([1, 2, 3, 4], 4) is True
+assert linear_search([1, 2, 3, 4], 5) is False
+assert linear_search([], 1) is False
+
+
 
 """
-Time and Space Analysis for problem 1:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+Time Complexity:
+- Best Case: O(1) — target is the first element
+- Average Case: O(n) — target is somewhere in the list
+- Worst Case: O(n) — target not found
+
+
+Space Complexity:
+- O(1) — no additional data structures created
+
+
+Why this approach:
+- Simple and readable for unsorted data
+
+
+Optimizations:
+- Could use a set for faster lookup
+- Trade-off: extra memory for O(1) average lookup
 """
 
 
@@ -29,19 +50,35 @@ Time and Space Analysis for problem 1:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    # Your code here
-    pass
+    unique = set()
+    for item in lst:
+        unique.add(item)
+    return len(unique)
 
-"""
-Time and Space Analysis for problem 2:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
-"""
 
+# Tests
+assert count_unique([1, 2, 2, 3]) == 3
+assert count_unique([]) == 0
+assert count_unique([5, 5, 5]) == 1
+"""
+Time Complexity:
+- Best Case: O(n)
+- Average Case: O(n)
+- Worst Case: O(n)
+
+
+Space Complexity:
+- O(n) — set grows with input size
+
+
+Why this approach:
+- Sets provide O(1) average insertion and lookup
+
+
+Optimizations:
+- No faster time solution exists
+- Trade-off: uses additional memory
+"""
 
 # 🔍 Problem 3: Return All Pairs That Sum to Target
 # Write a function that returns all unique pairs of numbers in the list that sum to a target.
@@ -52,17 +89,37 @@ Time and Space Analysis for problem 2:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    # Your code here
-    pass
+    if not lst:
+        return None
+    max_value = lst[0]
+    for item in lst:
+        if item > max_value:
+            max_value = item
+    return max_value
+
+
+# Tests
+assert find_max([1, 3, 2, 10, 4]) == 10
+assert find_max([-5, -2, -10]) == -2
+assert find_max([]) is None
 
 """
-Time and Space Analysis for problem 3:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+Time Complexity:
+- Best Case: O(n)
+- Average Case: O(n)
+- Worst Case: O(n)
+
+
+Space Complexity:
+- O(1) — constant extra memory
+
+
+Why this approach:
+- Single pass solution is optimal
+
+
+Optimizations:
+- Cannot be optimized further in time or space
 """
 
 
@@ -75,18 +132,34 @@ Time and Space Analysis for problem 3:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    # Your code here
-    pass
+    result = []
+    for item in lst:
+        result.append(item * 2)
+    return result
 
-"""
-Time and Space Analysis for problem 4:
-- When do resizes happen?
-- What is the worst-case for a single append?
-- What is the amortized time per append overall?
-- Space complexity:
-- Why does doubling reduce the cost overall?
-"""
 
+# Tests
+assert double_list([1, 2, 3]) == [2, 4, 6]
+assert double_list([]) == []
+"""
+Time Complexity:
+- Best Case: O(1) — duplicate found early
+- Average Case: O(n)
+- Worst Case: O(n)
+
+
+Space Complexity:
+- O(n) — set stores seen values
+
+
+Why this approach:
+- Improves time from O(n^2) to O(n)
+
+
+Optimizations:
+- This is the optimized version
+- Trade-off: additional memory usage
+"""
 
 # 🔍 Problem 5: Compute Running Totals
 # Write a function that takes a list of numbers and returns a new list
@@ -98,15 +171,36 @@ Time and Space Analysis for problem 4:
 # Because: [1, 1+2, 1+2+3, 1+2+3+4]
 
 def running_total(nums):
-    # Your code here
-    pass
+    result = []
+    for item in lst:
+        result.append(item * 2)
+    return result
+
+
+# Tests
+assert double_list([1, 2, 3]) == [2, 4, 6]
+assert double_list([]) == []
 
 """
-Time and Space Analysis for problem 5:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+Time Complexity:
+- Best Case: O(n)
+- Average Case: O(n)
+- Worst Case: O(n)
+
+
+Space Complexity:
+- O(n) — new list created
+
+
+Why this approach:
+- Clear and readable transformation
+
+
+Optimizations:
+- Could modify list in-place
+- Trade-off: mutates input data
+
+
+Amortized Time:
+- list.append() runs in amortized O(1) time
 """
