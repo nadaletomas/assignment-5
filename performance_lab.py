@@ -7,38 +7,34 @@
 # Output: 3
 
 def most_frequent(numbers):
-    for item in lst:
-        if item == target:
-            return True
-    return False
+    if not numbers:
+        return None
+    freq = {}
+    for n in numbers:
+        freq[n] = freq.get(n, 0) + 1
+    return max(freq, key=freq.get)
 
 
 # Tests
-assert linear_search([1, 2, 3, 4], 1) is True
-assert linear_search([1, 2, 3, 4], 4) is True
-assert linear_search([1, 2, 3, 4], 5) is False
-assert linear_search([], 1) is False
-
-
+assert most_frequent([1, 3, 2, 3, 4, 1, 3]) == 3
+assert most_frequent([1]) == 1
+assert most_frequent([]) is None
 
 """
 Time Complexity:
-- Best Case: O(1) — target is the first element
-- Average Case: O(n) — target is somewhere in the list
-- Worst Case: O(n) — target not found
+- Best/Average/Worst: O(n)
 
 
 Space Complexity:
-- O(1) — no additional data structures created
+- O(n) for the frequency dictionary
 
 
 Why this approach:
-- Simple and readable for unsorted data
+- One pass to count, one pass to find max
 
 
 Optimizations:
-- Could use a set for faster lookup
-- Trade-off: extra memory for O(1) average lookup
+- Could use collections.Counter for cleaner code
 """
 
 
@@ -50,34 +46,35 @@ Optimizations:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    unique = set()
-    for item in lst:
-        unique.add(item)
-    return len(unique)
+    seen = set()
+    result = []
+    for n in nums:
+        if n not in seen:
+            seen.add(n)
+            result.append(n)
+    return result
 
 
 # Tests
-assert count_unique([1, 2, 2, 3]) == 3
-assert count_unique([]) == 0
-assert count_unique([5, 5, 5]) == 1
+assert remove_duplicates([4, 5, 4, 6, 5, 7]) == [4, 5, 6, 7]
+assert remove_duplicates([]) == []
+assert remove_duplicates([1, 1, 1]) == [1]
+
 """
 Time Complexity:
-- Best Case: O(n)
-- Average Case: O(n)
-- Worst Case: O(n)
+- O(n)
 
 
 Space Complexity:
-- O(n) — set grows with input size
+- O(n)
 
 
 Why this approach:
-- Sets provide O(1) average insertion and lookup
+- Maintains order with fast lookups
 
 
 Optimizations:
-- No faster time solution exists
-- Trade-off: uses additional memory
+- No faster asymptotic solution exists
 """
 
 # 🔍 Problem 3: Return All Pairs That Sum to Target
@@ -89,37 +86,36 @@ Optimizations:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    if not lst:
-        return None
-    max_value = lst[0]
-    for item in lst:
-        if item > max_value:
-            max_value = item
-    return max_value
+    seen = set()
+    pairs = []
+    for n in nums:
+        diff = target - n
+        if diff in seen:
+            pairs.append((diff, n))
+        seen.add(n)
+    return pairs
 
 
 # Tests
-assert find_max([1, 3, 2, 10, 4]) == 10
-assert find_max([-5, -2, -10]) == -2
-assert find_max([]) is None
+assert set(find_pairs([1, 2, 3, 4], 5)) == {(1, 4), (2, 3)}
+assert find_pairs([], 5) == []
+assert find_pairs([2, 4], 6) == [(2, 4)]
 
 """
 Time Complexity:
-- Best Case: O(n)
-- Average Case: O(n)
-- Worst Case: O(n)
+- O(n)
 
 
 Space Complexity:
-- O(1) — constant extra memory
+- O(n)
 
 
 Why this approach:
-- Single pass solution is optimal
+- Uses a hash set for constant-time lookups
 
 
 Optimizations:
-- Cannot be optimized further in time or space
+- Optimal for unsorted input
 """
 
 
@@ -132,33 +128,40 @@ Optimizations:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    result = []
-    for item in lst:
-        result.append(item * 2)
-    return result
+    capacity = 2
+    size = 0
+    arr = [None] * capacity 
+
+    for i in range(n):
+        if size == capacity:
+            print(f"Resizing from {capacity} to {capacity * 2}")
+            capacity *= 2
+            new_arr = [None] * capacity
+            for j in range(size):
+                new_arr[j] = arr[j]
+            arr = new_arr
+        arr[size] = i
+        size += 1
 
 
 # Tests
-assert double_list([1, 2, 3]) == [2, 4, 6]
-assert double_list([]) == []
+add_n_items(6)
+
 """
 Time Complexity:
-- Best Case: O(1) — duplicate found early
-- Average Case: O(n)
-- Worst Case: O(n)
+- Amortized O(1) per append
 
 
 Space Complexity:
-- O(n) — set stores seen values
+- O(n)
 
 
 Why this approach:
-- Improves time from O(n^2) to O(n)
+- Demonstrates dynamic array resizing
 
 
 Optimizations:
-- This is the optimized version
-- Trade-off: additional memory usage
+- Python lists already handle this internally
 """
 
 # 🔍 Problem 5: Compute Running Totals
@@ -172,35 +175,34 @@ Optimizations:
 
 def running_total(nums):
     result = []
-    for item in lst:
-        result.append(item * 2)
+    total = 0
+    for n in nums:
+        total += n
+        result.append(total)
     return result
 
 
 # Tests
-assert double_list([1, 2, 3]) == [2, 4, 6]
-assert double_list([]) == []
+assert running_total([1, 2, 3, 4]) == [1, 3, 6, 10]
+assert running_total([]) == []
 
 """
 Time Complexity:
-- Best Case: O(n)
-- Average Case: O(n)
-- Worst Case: O(n)
+- O(n)
 
 
 Space Complexity:
-- O(n) — new list created
+- O(n)
 
 
 Why this approach:
-- Clear and readable transformation
+- Single pass accumulation
 
 
 Optimizations:
-- Could modify list in-place
-- Trade-off: mutates input data
+- Could do in-place but mutates input
 
 
 Amortized Time:
-- list.append() runs in amortized O(1) time
+- list.append() is amortized O(1)
 """
